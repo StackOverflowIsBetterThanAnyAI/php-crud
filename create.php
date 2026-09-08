@@ -1,7 +1,8 @@
 <?php
 
+$pdo = require 'db.php';
+
 $uploadsDir = "uploads/";
-$contactsFile = "contacts.json";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -18,15 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $imagePath = $uploadsDir . $imageName;
 
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
-            $contacts = file_exists($contactsFile) ? json_decode(file_get_contents($contactsFile), true) : [];
-            $contacts[] = [
-                "id" => uniqid(),
-                "name" => $name,
-                "email" => $email,
-                "phone" => $phone,
-                "image" => $imagePath
-            ];
-            file_put_contents($contactsFile, json_encode($contacts, JSON_PRETTY_PRINT));
+            $stmt = $pdo->prepare("INSERT INTO contacts (id, name, email, phone, image) VALUES (:id, :name, :email, :phone, :image)");
+            $stmt->execute([
+                ':id' => uniqid(),
+                ':name' => $name,
+                ':email' => $email,
+                ':phone' => $phone,
+                ':image' => $imagePath
+            ]);
             echo "Contact added.";
         } else {
             echo "Failed to upload image.";

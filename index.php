@@ -1,7 +1,10 @@
 <?php
-$contactsFile = "contacts.json";
-$contacts = file_exists($contactsFile) ? json_decode(file_get_contents($contactsFile), true) : [];
-
+$pdo = require 'db.php';
+$contacts = [];
+if ($pdo) {
+    $stmt = $pdo->query("SELECT * FROM contacts");
+    $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!doctype html>
