@@ -22,12 +22,12 @@ if ($pdo) {
         <?php
         foreach ($contacts as $contact) {
             echo "
-                        <li>
-                            <img src='{$contact['image']}' alt='Contact Image' width='256' height='144' />
-                            <a href='delete.php?id={$contact['id']}'>Delete</a>
-                            <p>Name: {$contact['name']}</p>
-                        </li>
-                    ";
+                    <li>
+                        <img src='{$contact['image']}' alt='Contact Image' width='256' height='144' />
+                        <a href='delete.php?id={$contact['id']}'>Delete</a>
+                        <p>Name: {$contact['name']}</p>
+                    </li>
+                ";
         }
         ?>
     </ul>
