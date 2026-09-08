@@ -1,0 +1,1 @@
+<footer>Copyright © 2026 Michael Münzenhofer. All rights reserved.</footer>
